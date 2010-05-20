@@ -14,7 +14,7 @@ module Castronaut
     end
 
     def valid?
-      !invalid?
+      ticket && !invalid?
     end
     
     def invalid?

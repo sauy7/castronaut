@@ -10,7 +10,6 @@ module Castronaut
             gem 'ruby-net-ldap', '~> 0.0.4'
           rescue Gem::LoadError
             $stderr.puts "How can you have any pudding if you don\'t install ruby-net-ldap?"
-            exit(0)
           end
         end
         

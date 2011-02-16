@@ -16,12 +16,12 @@ begin
   files << Dir["lib/**/*", "app/**/*", "config/**/*",  "vendor/**/*"]
   
   Jeweler::Tasks.new do |s|
-    s.name = "castronaut"
-    s.summary = "Your friendly, cigar smoking authentication dicator... From Space!"
-    s.description = "Your friendly, cigar smoking authentication dicator... From Space!"
-    s.homepage = "http://github.com/relevance/castronaut"
-    s.email = "aaron@thinkrelevance.com"
-    s.authors = ["Relevance, Inc."]
+    s.name = "nbudin-castronaut"
+    s.summary = "Nat Budin's experimental fork of Castronaut"
+    s.description = "Nat Budin's experimental fork of Castronaut"
+    s.homepage = "http://github.com/nbudin/castronaut"
+    s.email = "natbudin@gmail.com"
+    s.authors = ["Relevance, Inc.", "Nat Budin"]
     s.files = files.flatten
     s.require_path = 'lib'
     s.has_rdoc = false
@@ -30,6 +30,9 @@ begin
     s.bindir = 'bin'
     s.default_executable = 'castronaut'
     s.executables = ["castronaut"]    
+
+    s.add_dependency 'sinatra'
+    s.add_dependency 'json'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

@@ -1,8 +1,7 @@
 #! /usr/bin/env ruby
-require "irb"
-Dir[File.dirname(__FILE__) + "/../vendor/**"].each do |dir| 
-  $LOAD_PATH.unshift(File.directory?(lib = "#{dir}/lib") ? lib : dir)
-end
+require 'rubygems'
+require 'bundler/setup'
+require 'irb'
 
 require File.join(File.dirname(__FILE__), '..', 'castronaut')
 

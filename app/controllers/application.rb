@@ -1,42 +1,42 @@
+include Castronaut::Presenters
+
 get '/' do
   redirect '/login'
 end
 
 get '/login' do
   no_cache
-  @presenter = Castronaut::Presenters::Login.new(self)
-  @presenter.represent!
-  @presenter.your_mission.call
+  present! Login
 end
 
 post '/login' do
-  @presenter = Castronaut::Presenters::ProcessLogin.new(self)
-  @presenter.represent!
-  @presenter.your_mission.call
+  present! ProcessLogin
 end
 
 get '/logout' do
-  @presenter = Castronaut::Presenters::Logout.new(self)
-  @presenter.represent!
-  @presenter.your_mission.call
+  present! Logout
 end
 
 get '/serviceValidate' do
-  @presenter = Castronaut::Presenters::ServiceValidate.new(self)
-  @presenter.represent!
-  @presenter.your_mission.call
+  present! ServiceValidate
 end
 
 get '/proxyValidate' do
-  @presenter = Castronaut::Presenters::ProxyValidate.new(self)
-  @presenter.represent!
-  @presenter.your_mission.call
+  present! ProxyValidate
 end
 
 private
 
 def no_cache
-  response.headers.merge! 'Pragma' => 'no-cache',
-  'Cache-Control' => 'no-store',
-  'Expires' => (Time.now - 5.years).rfc2822
+  response.headers.merge!(
+    'Pragma' => 'no-cache',
+    'Cache-Control' => 'no-store',
+    'Expires' => (Time.now - 5.years).rfc2822
+  )
+end
+
+def present!(klass)
+  @presenter = klass.new(self)
+  @presenter.represent!
+  @presenter.your_mission.call
 end

@@ -6,7 +6,7 @@ describe 'Castronaut Application Controller' do
   describe "requesting / via GET" do
     it "redirects to /login" do
       get '/'
-      @response.should be_redirection
+      last_response.should be_redirection
     end
   end
 
@@ -15,19 +15,19 @@ describe 'Castronaut Application Controller' do
     it "responds with status 200" do
       get '/login', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      @response.should be_ok
+      last_response.should be_ok
     end
 
     it "sets the Pragma header to 'no-cache'" do
       get '/login', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      headers['Pragma'].should == 'no-cache'
+      last_response.headers['Pragma'].should == 'no-cache'
     end
 
     it "sets the Cache-Control header to 'no-store'" do
       get '/login', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      headers['Cache-Control'].should == 'no-store'
+      last_response.headers['Cache-Control'].should == 'no-store'
     end
 
     it "sets the Expires header to '5 years ago in rfc2822 format'" do
@@ -37,7 +37,7 @@ describe 'Castronaut Application Controller' do
       
       get '/login', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      headers['Expires'].should include("Wed, 01 Jan 2003 00:00:00")
+      last_response.headers['Expires'].should include("Wed, 01 Jan 2003 00:00:00")
     end
 
   end
@@ -47,7 +47,7 @@ describe 'Castronaut Application Controller' do
     it 'responds with status 200' do
       post '/login', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      @response.should be_ok
+      last_response.should be_ok
     end
 
   end
@@ -57,7 +57,7 @@ describe 'Castronaut Application Controller' do
     it 'responds with status 200' do
       get '/logout', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      @response.should be_ok
+      last_response.should be_ok
     end
 
   end
@@ -67,7 +67,7 @@ describe 'Castronaut Application Controller' do
     it 'responds with status 200' do
       get '/serviceValidate', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      @response.should be_ok
+      last_response.should be_ok
     end
 
   end
@@ -77,7 +77,7 @@ describe 'Castronaut Application Controller' do
     it 'responds with status 200' do
       get '/proxyValidate', :env => { 'REMOTE_ADDR' => '10.0.0.1' }
 
-      @response.should be_ok
+      last_response.should be_ok
     end
 
   end

@@ -83,6 +83,7 @@ describe Castronaut::Presenters::ProcessLogin do
     
     it "fires an authentication success notice" do
       process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
+      Thread.should_receive(:new).and_yield
       process_login.should_receive(:fire_notice).with('success', {})
       process_login.fire_authentication_success_notice({})
     end

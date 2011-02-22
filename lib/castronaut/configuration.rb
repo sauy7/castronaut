@@ -3,9 +3,11 @@ require 'logger'
 require 'fileutils'
 
 class Hodel3000CompliantLogger < Logger
+
   def format_message(severity, timestamp, msg, progname)
     "#{timestamp.strftime("%b %d %H:%M:%S")} [#{$PID}]: #{severity} - #{progname.gsub(/\n/, '').lstrip}\n"
   end
+
 end
 
 module Castronaut
@@ -33,10 +35,11 @@ module Castronaut
     def parse_config_into_settings(config)
       mod = Module.new do
         config.each_pair do |k,v|
-          if self.methods.include?(k.to_s)
+          if self.methods.map(&:to_sym).include?(k.to_sym)
             STDERR.puts "#{self.class} - Configuration tried to define #{k}, which was already defined." unless ENV["test"] == "true"
             next
           end
+
           define_method(k) { v }
         end
       end
@@ -103,6 +106,7 @@ module Castronaut
         end
       end
     end
-  end
 
-end
+  end # class Configuration
+
+end # module Castronaut

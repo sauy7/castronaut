@@ -5,6 +5,7 @@ describe 'Castronaut Application Controller' do
 
   subject { last_response }
   let(:params) { { :env => {'REMOTE_ADDR' => '10.0.0.1'} } }
+  let(:json_response) { ActiveSupport::JSON.decode(last_response.body) }
 
   describe "GET /" do
 
@@ -56,6 +57,10 @@ describe 'Castronaut Application Controller' do
 
     it "sets json content-type" do
       last_response.headers['Content-Type'].should == 'application/json'
+    end
+
+    it "should have messages as an array" do
+      json_response['messages'].should == []
     end
 
   end
@@ -112,6 +117,10 @@ describe 'Castronaut Application Controller' do
 
     it "sets json content-type" do
       last_response.headers['Content-Type'] == 'application/json'
+    end
+
+    it "should have messages as an array" do
+      json_response['messages'].should == ["You have successfully logged out."]
     end
 
   end

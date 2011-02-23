@@ -20,7 +20,7 @@ module Castronaut
           end
         end
 
-        render :proxy_validate, :layout => false
+        render :proxy_validate
 
         self
       end

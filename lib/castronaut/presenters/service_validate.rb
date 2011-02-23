@@ -17,7 +17,7 @@ module Castronaut
           end
         end
 
-        render :service_validate, :layout => false
+        render :service_validate
 
         self
       end

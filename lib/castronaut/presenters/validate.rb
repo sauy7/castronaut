@@ -10,8 +10,8 @@ module Castronaut
           attr_reader :extra_attributes
           attr_accessor :login_ticket
 
-          def initialize(controller)
-            super controller
+          def initialize(controller, format)
+            super controller, format
             @extra_attributes = Castronaut::ExtraAttributes.new
           end
 

@@ -12,10 +12,11 @@ module Castronaut
       delegate :params, :request, :to => :controller
       delegate :cookies, :env, :to => :request
 
-      def initialize(controller)
+      def initialize(controller, format)
         @controller = controller
         @messages = []
-        @html_response = nil
+        @format = format
+        @your_mission = nil
       end
 
       def url
@@ -71,7 +72,14 @@ module Castronaut
     protected
 
       def render template, options = {}
-        @your_mission = lambda { controller.erb "#{template}.#{@format}", {:locals => {:presenter => self}}.merge(options) }
+        options[:layout] ||= false unless @format == :html
+
+        @your_mission = lambda do
+          controller.content_type @format
+          controller.erb "#{template}.#{@format}".to_sym, {
+            :locals => {:presenter => self}
+          }.merge(options)
+        end
       end
 
       def redirect uri, code = 303

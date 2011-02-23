@@ -1,33 +1,39 @@
 include Castronaut::Presenters
 
+def path_regex path
+  /^\/#{path}(\.json)?$/
+end
+
 get '/' do
   redirect '/login'
 end
 
-get '/login' do
+get(path_regex 'login') do |extension|
   no_cache
-  present! Login
+  present! Login, view_format(extension)
 end
 
-post '/login' do
-  present! ProcessLogin
+post(path_regex 'login') do |extension|
+  present! ProcessLogin, view_format(extension)
 end
 
-get '/logout' do
-  present! Logout
+get(path_regex 'logout') do |extension|
+  present! Logout, view_format(extension)
 end
 
-get '/serviceValidate' do
-  @format = 'xml'
-  present! ServiceValidate
+get(path_regex 'serviceValidate') do |extension|
+  present! ServiceValidate, view_format(extension, :xml)
 end
 
-get '/proxyValidate' do
-  @format = 'xml'
-  present! ProxyValidate
+get(path_regex 'proxyValidate') do |extension|
+  present! ProxyValidate, view_format(extension, :xml)
 end
 
 private
+
+def view_format(extension, default = :html)
+  extension && extension.delete('.').to_sym || default
+end
 
 def no_cache
   response.headers.merge!(
@@ -37,9 +43,8 @@ def no_cache
   )
 end
 
-def present!(klass)
-  @format ||= 'html'
-  @presenter = klass.new(self)
+def present!(klass, format = :html)
+  @presenter = klass.new(self, format)
   @presenter.represent!
   @presenter.your_mission.call
 end

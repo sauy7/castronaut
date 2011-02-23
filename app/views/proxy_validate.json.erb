@@ -1,0 +1,18 @@
+<%=
+  if presenter.proxy_ticket_result.valid?
+
+    { :success => {
+      :user => presenter.username.to_s.to_xs,
+      :proxyGrantingTicket => presenter.proxy_granting_ticket_iou.to_s.to_xs,
+      :proxies => (presenter.proxies || []),
+    }.merge(presenter.extra_attributes)}.to_json
+
+  else
+
+    { :failure => {
+      :code => presenter.proxy_ticket_result.message_category,
+      :message => presenter.proxy_ticket_result.message
+    }}.to_json
+
+  end
+%>

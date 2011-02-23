@@ -285,7 +285,7 @@ describe Castronaut::Presenters::ProcessLogin do
               @controller.should_receive(:redirect).with(:service_uri_stub, 303)
               process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
               process_login.represent!
-              process_login.instance_variable_get("@html_response").call
+              process_login.instance_variable_get("@your_mission").call
             end
 
           end

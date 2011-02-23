@@ -6,7 +6,7 @@ module Castronaut
 
       MissingCredentialsMessage = "Please supply a username and password to login."
 
-      attr_reader :controller, :html_response
+      attr_reader :controller, :your_mission
       attr_accessor :messages
 
       delegate :params, :request, :to => :controller
@@ -71,11 +71,11 @@ module Castronaut
     protected
 
       def render template, options = {}
-        @html_response = lambda { controller.erb template, {:locals => {:presenter => self}}.merge(options) }
+        @your_mission = lambda { controller.erb "#{template}.#{@format}", {:locals => {:presenter => self}}.merge(options) }
       end
 
       def redirect uri, code = 303
-        @html_response = lambda { controller.redirect uri, code }
+        @your_mission = lambda { controller.redirect uri, code }
       end
 
       def setup_http_request(url, auth_status, payload)

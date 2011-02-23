@@ -18,10 +18,12 @@ get '/logout' do
 end
 
 get '/serviceValidate' do
+  @format = 'xml'
   present! ServiceValidate
 end
 
 get '/proxyValidate' do
+  @format = 'xml'
   present! ProxyValidate
 end
 
@@ -36,7 +38,8 @@ def no_cache
 end
 
 def present!(klass)
+  @format ||= 'html'
   @presenter = klass.new(self)
   @presenter.represent!
-  @presenter.html_response.call
+  @presenter.your_mission.call
 end

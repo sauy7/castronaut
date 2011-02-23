@@ -12,7 +12,7 @@ module Castronaut
       delegate :params, :request, :to => :controller
       delegate :cookies, :env, :to => :request
 
-      def initialize(controller, format)
+      def initialize(controller, format = :html)
         @controller = controller
         @messages = []
         @format = format

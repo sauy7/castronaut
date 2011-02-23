@@ -85,13 +85,13 @@ describe Castronaut::Presenters::ProcessLogin do
       process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
       Thread.should_receive(:new).and_yield
       process_login.should_receive(:fire_notice).with('success', {})
-      process_login.fire_authentication_success_notice({})
+      process_login.send :fire_authentication_success_notice, {}
     end
 
     it "fires an authentication failure notice" do
       process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
       process_login.should_receive(:fire_notice).with('failed', {})
-      process_login.fire_authentication_failure_notice({})
+      process_login.send :fire_authentication_failure_notice, {}
     end
 
 
@@ -103,7 +103,7 @@ describe Castronaut::Presenters::ProcessLogin do
         
         Net::HTTP::Post.should_not_receive(:new)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it 'does nothing if there are callbacks but it can not find the requested one' do
@@ -114,7 +114,7 @@ describe Castronaut::Presenters::ProcessLogin do
         
         Net::HTTP::Post.should_not_receive(:new)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
 
@@ -128,7 +128,7 @@ describe Castronaut::Presenters::ProcessLogin do
 
         URI.should_receive(:parse).with('example.com').and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it "builds a Net:HTTP:Post request with the given payload and status" do
@@ -141,7 +141,7 @@ describe Castronaut::Presenters::ProcessLogin do
         Net::HTTP::Post.should_receive(:new).with('uri-path', { "port"=>"2000"}).and_return(stub({}).as_null_object)
         Net::HTTP.stub!(:new).and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it "sends the request using Net:HTTP.new" do
@@ -154,7 +154,7 @@ describe Castronaut::Presenters::ProcessLogin do
 
         Net::HTTP.should_receive(:new).and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
 
@@ -285,7 +285,7 @@ describe Castronaut::Presenters::ProcessLogin do
               @controller.should_receive(:redirect).with(:service_uri_stub, 303)
               process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
               process_login.represent!
-              process_login.instance_variable_get("@your_mission").call
+              process_login.instance_variable_get("@html_response").call
             end
 
           end

@@ -12,6 +12,8 @@
   authentication_result
   extra_attributes
   ticket_result
+  presenters/base
+  presenters/validate
   presenters/login
   presenters/logout
   presenters/process_login

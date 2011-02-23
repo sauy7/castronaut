@@ -38,5 +38,5 @@ end
 def present!(klass)
   @presenter = klass.new(self)
   @presenter.represent!
-  @presenter.your_mission.call
+  @presenter.html_response.call
 end

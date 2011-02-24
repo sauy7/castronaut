@@ -237,7 +237,9 @@ describe Castronaut::Presenters::ProcessLogin do
           adapter = stub(:authenticate => 'result').as_null_object
           Castronaut::Adapters.stub!(:selected_adapter).and_return(adapter)
           adapter.stub!(:authenticate).with('username', 'password').and_return(stub(:valid? => true).as_null_object)
-          @controller.should_receive(:set_cookie)
+          response = mock('response')
+          response.should_receive(:set_cookie)
+          @controller.should_receive(:response).and_return(response)
         end
 
         it "generates a ticket granting ticket" do

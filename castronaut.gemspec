@@ -24,10 +24,14 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '~> 2.2'
   s.add_dependency 'activerecord', '~> 2.2'
   s.add_dependency 'crypt-isaac', '~> 0.9'
+
+  # TODO these should be optional
+  # according to the chosen adapter
+  s.add_dependency 'sqlite3', '~> 1.3.1'
   s.add_dependency 'ruby-net-ldap'
+  s.add_dependency 'mysql'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'sqlite3', '~> 1.3.1'
   s.add_development_dependency 'rspec', '1.3.1'
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'test-unit', '1.2.3'

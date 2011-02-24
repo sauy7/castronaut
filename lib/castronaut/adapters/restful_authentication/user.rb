@@ -3,24 +3,29 @@ require "digest/sha1"
 module Castronaut
   module Adapters
     module RestfulAuthentication
-      
+
       class User < ActiveRecord::Base
-      
+
+        def self.inheritance_column
+          # something random. we just want to ignore type column if we find it...
+          Castronaut.config.cas_adapter['inheritance_column'] || "B4tm4n"
+        end
+
         def self.digest(password, salt)
           site_key = Castronaut.config.cas_adapter['site_key']
           digest_value = site_key
-          
+
           Castronaut.config.cas_adapter['digest_stretches'].times do
             digest_value = secure_digest(digest_value, salt, password, site_key)
           end
-          
+
           digest_value
         end
 
         def self.secure_digest(*args)
           Digest::SHA1.hexdigest(args.flatten.join('--'))
         end
-        
+
         def self.find_by_login(login)
           if Castronaut.config.cas_adapter.has_key?('extra_authentication_conditions')
             find(:first, :conditions => ["login = ? AND #{Castronaut.config.cas_adapter['extra_authentication_conditions']}", login])
@@ -42,9 +47,9 @@ module Castronaut
             Castronaut::AuthenticationResult.new(username, "Unable to authenticate")
           end
         end
-        
+
       end
-    
+
     end
   end
 end

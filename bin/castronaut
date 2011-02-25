@@ -55,14 +55,6 @@ unless Castronaut.config
   end
 end
 
-Sinatra::Application.set(
-  :environment => Castronaut.config.environment.to_sym,
-  :run => true,
-  :raise_errors => true,
-  :logging => true,
-  :port => Castronaut.config.respond_to?(:server_port) ? Castronaut.config.server_port : Sinatra::Application.default_options[:port]
-)
-
 Castronaut.logger.info("Sinatra - Loading app/config.rb")
 load File.expand_path(File.join(File.dirname(__FILE__), '..', 'app', 'config.rb'))
 

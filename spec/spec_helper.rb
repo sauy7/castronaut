@@ -32,6 +32,6 @@ class CreateUsers < ActiveRecord::Migration
   Castronaut::Adapters::Development::User.connection.add_index :users, :login, :unique => true
 end
 
-Spec::Runner.configure do |config|
-  config.include Spec::Rails::Mocks
+RSpec.configure do |config|
+  config.include RSpec::Rails::Mocks
 end

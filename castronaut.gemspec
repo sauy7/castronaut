@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mysql'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '1.3.1'
+  s.add_development_dependency 'rspec', '>= 2.2.1'
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'test-unit', '1.2.3'
   s.add_development_dependency 'rcov'

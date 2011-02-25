@@ -1,5 +1,4 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_controller_helper'))
-require 'spec/interop/test'
 
 describe 'Castronaut Application Controller' do
 

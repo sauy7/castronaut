@@ -243,7 +243,7 @@ describe Castronaut::Models::ServiceTicket do
         describe "when ticket validation was successful and no branches were encountered" do
           
           before do
-            Castronaut::Models::ServiceTicket.stub!(:find_by_ticket).and_return(mock('service ticket', :consumed? => false, :expired? => false, :consumed_at= => nil, :null_object => true, :matches_service? => true))
+            Castronaut::Models::ServiceTicket.stub!(:find_by_ticket).and_return(mock('service ticket', :consumed? => false, :expired? => false, :consumed_at= => nil, :matches_service? => true).as_null_object)
           end
 
           it "returns a ticket result with a nil message" do

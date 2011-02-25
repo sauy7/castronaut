@@ -83,14 +83,15 @@ describe Castronaut::Presenters::ProcessLogin do
     
     it "fires an authentication success notice" do
       process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
+      Thread.should_receive(:new).and_yield
       process_login.should_receive(:fire_notice).with('success', {})
-      process_login.fire_authentication_success_notice({})
+      process_login.send :fire_authentication_success_notice, {}
     end
 
     it "fires an authentication failure notice" do
       process_login = Castronaut::Presenters::ProcessLogin.new(@controller)
       process_login.should_receive(:fire_notice).with('failed', {})
-      process_login.fire_authentication_failure_notice({})
+      process_login.send :fire_authentication_failure_notice, {}
     end
 
 
@@ -102,7 +103,7 @@ describe Castronaut::Presenters::ProcessLogin do
         
         Net::HTTP::Post.should_not_receive(:new)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it 'does nothing if there are callbacks but it can not find the requested one' do
@@ -113,7 +114,7 @@ describe Castronaut::Presenters::ProcessLogin do
         
         Net::HTTP::Post.should_not_receive(:new)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
 
@@ -127,7 +128,7 @@ describe Castronaut::Presenters::ProcessLogin do
 
         URI.should_receive(:parse).with('example.com').and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it "builds a Net:HTTP:Post request with the given payload and status" do
@@ -140,7 +141,7 @@ describe Castronaut::Presenters::ProcessLogin do
         Net::HTTP::Post.should_receive(:new).with('uri-path', { "port"=>"2000"}).and_return(stub({}).as_null_object)
         Net::HTTP.stub!(:new).and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
       it "sends the request using Net:HTTP.new" do
@@ -153,7 +154,7 @@ describe Castronaut::Presenters::ProcessLogin do
 
         Net::HTTP.should_receive(:new).and_return(stub({}).as_null_object)
 
-        process_login.fire_notice 'success', {}
+        process_login.send :fire_notice, 'success', {}
       end
 
 
@@ -236,7 +237,9 @@ describe Castronaut::Presenters::ProcessLogin do
           adapter = stub(:authenticate => 'result').as_null_object
           Castronaut::Adapters.stub!(:selected_adapter).and_return(adapter)
           adapter.stub!(:authenticate).with('username', 'password').and_return(stub(:valid? => true).as_null_object)
-          @controller.should_receive(:set_cookie)
+          response = mock('response')
+          response.should_receive(:set_cookie)
+          @controller.should_receive(:response).and_return(response)
         end
 
         it "generates a ticket granting ticket" do

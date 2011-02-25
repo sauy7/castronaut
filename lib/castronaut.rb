@@ -1,22 +1,30 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'configuration'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'support', 'sample'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'utilities', 'random_string'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'consumeable'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'dispenser'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'login_ticket'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'service_ticket'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'proxy_ticket'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'ticket_granting_ticket'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'models', 'proxy_granting_ticket'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'authentication_result'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'extra_attributes'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'ticket_result'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'presenters', 'login'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'presenters', 'logout'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'presenters', 'process_login'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'presenters', 'service_validate'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'presenters', 'proxy_validate'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'adapters'))
+%w(
+  configuration
+  support/sample
+  utilities/random_string
+  models/consumeable
+  models/dispenser
+  models/login_ticket
+  models/service_ticket
+  models/proxy_ticket
+  models/ticket_granting_ticket
+  models/proxy_granting_ticket
+  authentication_result
+  extra_attributes
+  ticket_result
+  presenters/base
+  presenters/validate
+  presenters/login
+  presenters/logout
+  presenters/process_login
+  presenters/service_validate
+  presenters/proxy_validate
+  adapters
+).each do |file|
+
+  require File.expand_path( File.join File.dirname(__FILE__), 'castronaut', file )
+
+end
 
 module Castronaut
 

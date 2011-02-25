@@ -10,34 +10,6 @@ require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 require "fileutils"
 
-begin
-  require 'jeweler'
-  files = ["MIT-LICENSE", "Rakefile", "README.textile", "castronaut.rb", "bin/castronaut"]
-  files << Dir["lib/**/*", "app/**/*", "config/**/*",  "vendor/**/*"]
-  
-  Jeweler::Tasks.new do |s|
-    s.name = "nbudin-castronaut"
-    s.summary = "Nat Budin's experimental fork of Castronaut"
-    s.description = "Nat Budin's experimental fork of Castronaut"
-    s.homepage = "http://github.com/nbudin/castronaut"
-    s.email = "natbudin@gmail.com"
-    s.authors = ["Relevance, Inc.", "Nat Budin"]
-    s.files = files.flatten
-    s.require_path = 'lib'
-    s.has_rdoc = false
-    s.extra_rdoc_files = []
-    s.rdoc_options = []
-    s.bindir = 'bin'
-    s.default_executable = 'castronaut'
-    s.executables = ["castronaut"]    
-
-    s.add_dependency 'sinatra'
-    s.add_dependency 'json'
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-
 desc "Run all examples with RCov"
 Spec::Rake::SpecTask.new('specs_with_rcov') do |t|
   ENV["test"] = "true"
@@ -48,6 +20,7 @@ end
 
 desc "Run all examples"
 Spec::Rake::SpecTask.new('spec') do |t|
+  ENV["test"] = "true"
   t.spec_files = FileList['spec/**/*.rb']
   t.rcov = false
   t.spec_opts = ['-cfn']

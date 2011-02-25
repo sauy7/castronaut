@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '../../../../vendor/isaac/crypt/ISAAC.rb')
+require 'crypt-isaac'
 
 module Castronaut
   module Utilities

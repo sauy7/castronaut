@@ -10,6 +10,7 @@ if File.exist?(default_config)
   Castronaut.config = Castronaut::Configuration.load(default_config)
 else
   STDERR.puts "Unable to locate configuration.  Currently looking at #{default_config}."
+  exit 0
 end
 
 require "application"

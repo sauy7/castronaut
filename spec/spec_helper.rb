@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'ruby-debug'
 
-require File.join(File.dirname(__FILE__), '..', 'castronaut')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'castronaut')
 require File.join(File.dirname(__FILE__), 'spec_rails_mocks')
 
 Castronaut.config = Castronaut::Configuration.load(File.join(File.dirname(__FILE__), '..', 'config', 'castronaut.example.yml'))

@@ -1,3 +1,5 @@
+require 'sinatra'
+
 module Castronaut
 
   Castronaut.config ||= Castronaut::Configuration.load

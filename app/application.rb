@@ -1,5 +1,7 @@
 module Castronaut
 
+  Castronaut.config ||= Castronaut::Configuration.load
+
   class Application < Sinatra::Base
 
     configure do

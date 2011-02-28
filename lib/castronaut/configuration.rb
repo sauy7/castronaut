@@ -13,14 +13,21 @@ end
 module Castronaut
 
   class Configuration
-    DefaultConfigFilePath = './castronaut.yml'
+    DefaultConfigFilePath = Castronaut.file_path( 'config', 'castronaut.yml' )
 
     attr_accessor :config_file_path, :config_hash, :logger
 
-    def self.load(config_file_path = Castronaut::Configuration::DefaultConfigFilePath)
+    def self.load(path = Castronaut::Configuration::DefaultConfigFilePath)
+      if File.exist?(path)
+        STDOUT.puts "Loading configuration at #{path}..."
+      else
+        STDERR.puts "Unable to locate configuration at #{path}"
+        exit 0
+      end
+
       config = Castronaut::Configuration.new
-      config.config_file_path = config_file_path
-      config.config_hash = parse_yaml_config(config_file_path)
+      config.config_file_path = path
+      config.config_hash = parse_yaml_config(path)
       config.parse_config_into_settings(config.config_hash)
       config.logger = config.setup_logger
       config.debug_initialize if config.logger.debug?

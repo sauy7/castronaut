@@ -4,7 +4,7 @@ require 'active_record'
 module Castronaut
 
   def self.load_file( *path )
-    require file_path( path )
+    load file_path( path )
   end
 
   def self.require_file( *path )

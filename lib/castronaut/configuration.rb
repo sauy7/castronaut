@@ -80,7 +80,7 @@ module Castronaut
       create_directory('db')
 
       ActiveRecord::Base.logger = logger
-      ActiveRecord::Base.colorize_logging = false
+      #ActiveRecord::Base.colorize_logging = false
 
       connect_cas_to_activerecord
       connect_adapter_to_activerecord if cas_adapter.has_key?('database')
@@ -98,6 +98,7 @@ module Castronaut
 
     def connect_adapter_to_activerecord
       logger.info "#{self.class} - Connecting to cas adapter database using #{cas_adapter['database'].inspect}"
+
       if cas_adapter['adapter'] == "database"
         Castronaut::Adapters::RestfulAuthentication::User.establish_connection(cas_adapter['database'])
         Castronaut::Adapters::RestfulAuthentication::User.logger = logger

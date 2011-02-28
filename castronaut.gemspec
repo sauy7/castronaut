@@ -21,8 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'sinatra', '~> 1.0'
   s.add_dependency 'json', '~> 1.5.1'
-  s.add_dependency 'activesupport', '~> 2.2'
-  s.add_dependency 'activerecord', '~> 2.2'
+  s.add_dependency 'activesupport', '~> 3.0.3'
+  s.add_dependency 'activerecord', '~> 3.0.3'
   s.add_dependency 'crypt-isaac', '~> 0.9'
 
   # TODO these should be optional
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '>= 2.2.1'
   s.add_development_dependency 'rack-test'
+  s.add_development_dependency 'racksh'
   s.add_development_dependency 'test-unit', '1.2.3'
   s.add_development_dependency 'rcov'
   s.add_development_dependency 'ruby-debug19'

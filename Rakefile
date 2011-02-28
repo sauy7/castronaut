@@ -6,29 +6,24 @@
 
 require 'rubygems'
 require 'rake'
-require 'spec/rake/spectask'
-require 'spec/rake/verify_rcov'
+require 'rspec/core/rake_task'
+require 'rcov/rcovtask'
 require "fileutils"
 
-desc "Run all examples with RCov"
-Spec::Rake::SpecTask.new('specs_with_rcov') do |t|
+desc "Run all examples with Rcov"
+RSpec::Core::RakeTask.new('specs_with_rcov') do |t|
   ENV["test"] = "true"
-  t.spec_files = FileList['spec/**/*.rb']
+  t.pattern = 'spec/**/*.rb'
   t.rcov = true
   t.rcov_opts = ['--text-report', '--exclude', "~/.gem,spec,Library,lib/castronaut/db,#{ENV['GEM_HOME']}", '--sort', 'coverage']
 end
 
 desc "Run all examples"
-Spec::Rake::SpecTask.new('spec') do |t|
+RSpec::Core::RakeTask.new('spec') do |t|
   ENV["test"] = "true"
-  t.spec_files = FileList['spec/**/*.rb']
+  t.pattern = 'spec/**/*.rb'
   t.rcov = false
-  t.spec_opts = ['-cfn']
-end
-
-RCov::VerifyTask.new(:verify_coverage => :specs_with_rcov) do |t|
-  t.threshold = 96.38
-  t.index_html = 'coverage/index.html'
+  t.rspec_opts = ['-cfn']
 end
 
 namespace :ssl do
@@ -46,4 +41,4 @@ namespace :ssl do
 
 end
 
-task :default => [:verify_coverage]
+task :default => [:spec]

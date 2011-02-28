@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'ruby-debug'
 
-require File.join(File.dirname(__FILE__), '..', 'castronaut')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'castronaut')
 require File.join(File.dirname(__FILE__), 'spec_rails_mocks')
 
 Castronaut.config = Castronaut::Configuration.load(File.join(File.dirname(__FILE__), '..', 'config', 'castronaut.example.yml'))
@@ -32,6 +32,6 @@ class CreateUsers < ActiveRecord::Migration
   Castronaut::Adapters::Development::User.connection.add_index :users, :login, :unique => true
 end
 
-Spec::Runner.configure do |config|
-  config.include Spec::Rails::Mocks
+RSpec.configure do |config|
+  config.include RSpec::Rails::Mocks
 end

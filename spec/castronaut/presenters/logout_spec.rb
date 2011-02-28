@@ -76,6 +76,7 @@ describe Castronaut::Presenters::Logout do
     end
 
     it "deletes the tgt cookie from the controller" do
+      Castronaut::Models::TicketGrantingTicket.stub!(:find_by_ticket)
       @controller.response.should_receive(:delete_cookie).with('tgt')
       Castronaut::Presenters::Logout.new(@controller).represent!
     end

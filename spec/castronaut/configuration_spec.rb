@@ -4,7 +4,7 @@ require 'yaml'
 describe Castronaut::Configuration do
 
   before(:all) do
-    @test_config_file = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'config', 'castronaut.example.yml'))
+    @test_config_file = File.expand_path('../../../config/castronaut.example.yml', __FILE__)
   end
 
   describe "initialization" do
@@ -18,13 +18,14 @@ describe Castronaut::Configuration do
       config.stub!(:setup_logger).and_return(stub({}).as_null_object)
       Castronaut::Configuration.stub!(:new).and_return(config)
 
-      Castronaut::Configuration.load.config_file_path.should == './castronaut.yml'
+      Castronaut::Configuration.load.config_file_path.should == File.expand_path('../../../config/castronaut.yml', __FILE__)
     end
 
     it "uses whatever file path is passed to it as the alternate path" do
       Castronaut::Configuration.stub!(:parse_yaml_config).and_return({})
 
       config = Castronaut::Configuration.new
+      File.stub!(:exist?).and_return(true)
       config.stub!(:parse_config_into_settings)
       config.stub!(:connect_activerecord)
       config.stub!(:setup_logger).and_return(stub({}).as_null_object)
@@ -63,8 +64,10 @@ describe Castronaut::Configuration do
       config.stub!(:connect_activerecord)
       Castronaut::Configuration.stub!(:new).and_return(config)
 
-      File.stub!(:exist?).and_return(false)
+      File.should_receive(:exist?).with(@test_config_file).and_return(true)
+      File.should_receive(:exist?).with('log').and_return(false)
       FileUtils.should_receive(:mkdir_p)
+
       Castronaut::Configuration.load(@test_config_file)
     end
 

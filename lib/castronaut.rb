@@ -30,6 +30,7 @@ module Castronaut
   %w(
     configuration
     support/sample
+    support/xchar
     utilities/random_string
     models/consumeable
     models/dispenser

@@ -17,6 +17,8 @@ module Castronaut
         @messages = []
         @format = format
         @your_mission = nil
+
+        Castronaut.logger.info "Presenting #{self.class.to_s} with params: #{params}"
       end
 
       def url
@@ -27,7 +29,7 @@ module Castronaut
         cookies['tgt']
       end
 
-      alias ticket_generating_ticket_cookie ticket_granting_ticket_cookie 
+      alias ticket_generating_ticket_cookie ticket_granting_ticket_cookie
 
       def client_host
         env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_HOST'] || env['REMOTE_ADDR']

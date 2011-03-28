@@ -2,8 +2,8 @@
   if presenter.service_ticket_result.valid?
 
     { :success => {
-      :user => presenter.username.to_s.to_xs,
-      :proxyGrantingTicket => presenter.proxy_granting_ticket_iou.to_s.to_xs,
+      :user => presenter.username.to_s,
+      :proxyGrantingTicket => presenter.proxy_granting_ticket_iou.to_s,
     }.merge(presenter.extra_attributes)}.to_json
 
   else

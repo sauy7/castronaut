@@ -15,7 +15,7 @@ xml.cas :serviceResponse, "xmlns:cas" => "http://www.yale.edu/tp/cas" do
       end
       
       presenter.extra_attributes.each do |attr, value|
-        xml.send(attr, value)
+        xml.tag!(attr, value)
       end
     end
   else

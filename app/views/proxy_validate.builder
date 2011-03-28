@@ -1,5 +1,5 @@
 xml.instruct!
-xml.cas :serviceResponse "xmlns:cas" => "http://www.yale.edu/tp/cas" do
+xml.cas :serviceResponse, "xmlns:cas" => "http://www.yale.edu/tp/cas" do
   if presenter.proxy_ticket_result.valid?
     xml.cas :authenticationSuccess do
       xml.cas(:user, presenter.username)

@@ -1,48 +1,8 @@
 module Castronaut
+
   module Presenters
 
-    class Login
-      attr_reader :controller, :your_mission
-      attr_accessor :messages
-
-      delegate :params, :request, :to => :controller
-      delegate :cookies, :env, :to => :request
-
-      def initialize(controller)
-        @controller = controller
-        @messages = []
-        @your_mission = nil
-      end
-
-      def service
-        params['service']
-      end
-
-      def renewal
-        params['renew']
-      end
-
-      def gateway?
-        return true if params['gateway'] == 'true'
-        return true if params['gateway'] == '1'
-        false
-      end
-
-      def ticket_generating_ticket_cookie
-        cookies['tgt']
-      end
-
-      def redirection_loop?
-        params.has_key?('redirection_loop_intercepted')
-      end
-      
-      def client_host
-        env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_HOST'] || env['REMOTE_ADDR']
-      end
-      
-      def login_ticket
-        Castronaut::Models::LoginTicket.generate_from(client_host).ticket
-      end
+    class Login < Base
 
       def represent!
         ticket_granting_ticket_result = Castronaut::Models::TicketGrantingTicket.validate_cookie(ticket_generating_ticket_cookie)
@@ -71,7 +31,7 @@ module Castronaut
         
         end
       
-        @your_mission = lambda { controller.erb :login, :locals => { :presenter => self } }
+        render :login
               
         self
       end
@@ -81,4 +41,3 @@ module Castronaut
   end
   
 end
-

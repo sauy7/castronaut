@@ -6,57 +6,24 @@
 
 require 'rubygems'
 require 'rake'
-require 'spec/rake/spectask'
-require 'spec/rake/verify_rcov'
+require 'rspec/core/rake_task'
+require 'rcov/rcovtask'
 require "fileutils"
 
-begin
-  require 'jeweler'
-  files = ["MIT-LICENSE", "Rakefile", "README.textile", "castronaut.rb", "bin/castronaut"]
-  files << Dir["lib/**/*", "app/**/*", "config/**/*",  "vendor/**/*"]
-  
-  Jeweler::Tasks.new do |s|
-    s.name = "nbudin-castronaut"
-    s.summary = "Nat Budin's experimental fork of Castronaut"
-    s.description = "Nat Budin's experimental fork of Castronaut"
-    s.homepage = "http://github.com/nbudin/castronaut"
-    s.email = "natbudin@gmail.com"
-    s.authors = ["Relevance, Inc.", "Nat Budin"]
-    s.files = files.flatten
-    s.require_path = 'lib'
-    s.has_rdoc = false
-    s.extra_rdoc_files = []
-    s.rdoc_options = []
-    s.bindir = 'bin'
-    s.default_executable = 'castronaut'
-    s.executables = ["castronaut"]    
-
-    s.add_dependency 'sinatra'
-    s.add_dependency 'json'
-    s.add_dependency 'builder', '>= 2.0.0'
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-
-desc "Run all examples with RCov"
-Spec::Rake::SpecTask.new('specs_with_rcov') do |t|
+desc "Run all examples with Rcov"
+RSpec::Core::RakeTask.new('specs_with_rcov') do |t|
   ENV["test"] = "true"
-  t.spec_files = FileList['spec/**/*.rb']
+  t.pattern = 'spec/**/*.rb'
   t.rcov = true
   t.rcov_opts = ['--text-report', '--exclude', "~/.gem,spec,Library,lib/castronaut/db,#{ENV['GEM_HOME']}", '--sort', 'coverage']
 end
 
 desc "Run all examples"
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_files = FileList['spec/**/*.rb']
+RSpec::Core::RakeTask.new('spec') do |t|
+  ENV["test"] = "true"
+  t.pattern = 'spec/**/*.rb'
   t.rcov = false
-  t.spec_opts = ['-cfn']
-end
-
-RCov::VerifyTask.new(:verify_coverage => :specs_with_rcov) do |t|
-  t.threshold = 96.38
-  t.index_html = 'coverage/index.html'
+  t.rspec_opts = ['-cfn']
 end
 
 namespace :ssl do
@@ -74,4 +41,4 @@ namespace :ssl do
 
 end
 
-task :default => [:verify_coverage]
+task :default => [:spec]

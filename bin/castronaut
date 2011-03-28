@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'castronaut'))
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../vendor/sinatra/lib')
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../vendor/rack/lib')
+require File.expand_path( File.join File.dirname(__FILE__), '..', 'lib', 'castronaut' )
 
-require 'rack'
+require 'rubygems'
+require 'bundler/setup'
 require 'sinatra'
 require 'optparse'
 
@@ -44,28 +43,5 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-unless Castronaut.config
-  $stderr.puts "No configuration file specified.  Deafaulting to ./config/castronaut.yml"
-  default_config = File.expand_path("./config/castronaut.yml")
-
-  if File.exist?(default_config)
-    Castronaut.config = Castronaut::Configuration.load(default_config)
-  else
-    puts "Unable to locate configuration.  Currently looking at #{default_config}.  You can pass a custom configuration path by using the -C flag."
-    exit(0)
-  end
-end
-
-Sinatra::Application.set(
-  :environment => Castronaut.config.environment.to_sym,
-  :run => true,
-  :raise_errors => true,
-  :logging => true,
-  :port => Castronaut.config.respond_to?(:server_port) ? Castronaut.config.server_port : Sinatra::Application.default_options[:port]
-)
-
-Castronaut.logger.info("Sinatra - Loading app/config.rb")
-load File.expand_path(File.join(File.dirname(__FILE__), '..', 'app', 'config.rb'))
-
-Castronaut.logger.info("Sinatra - Loading app/application.rb")
-load File.expand_path(File.join(File.dirname(__FILE__), '..', 'app', 'controllers', 'application.rb'))
+Castronaut.require_file 'app', 'application'
+Castronaut.logger.info "Sinatra - Loaded app/application"

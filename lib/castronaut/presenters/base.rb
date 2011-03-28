@@ -81,7 +81,7 @@ module Castronaut
           render_options = {
             :locals => {:presenter => self}
           }.merge(options)
-          template_filename = "#{template}.#{@format}"
+          template_filename = "#{template}.#{@format}".to_sym
           
           case @format.to_sym
           when :xml

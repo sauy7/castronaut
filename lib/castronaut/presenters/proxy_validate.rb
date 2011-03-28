@@ -14,7 +14,7 @@ module Castronaut
         @controller = controller
         @messages = []
         @your_mission = nil
-        @extra_attributes = Castronaut::ExtraAttributes.new
+        @extra_attributes = {}
       end
 
       def service

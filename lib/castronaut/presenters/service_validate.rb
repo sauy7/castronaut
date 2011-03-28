@@ -58,7 +58,7 @@ module Castronaut
           end
         end
 
-        @your_mission = lambda { controller.erb :service_validate, :layout => false, :locals => { :presenter => self } }
+        @your_mission = lambda { controller.builder :service_validate, :layout => false, :locals => { :presenter => self } }
 
         self
       end

@@ -56,7 +56,7 @@ module Castronaut
           end
         end
 
-        @your_mission = lambda { controller.erb :proxy_validate, :layout => false, :locals => { :presenter => self } }
+        @your_mission = lambda { controller.builder :proxy_validate, :layout => nil, :locals => { :presenter => self } }
 
         self
       end

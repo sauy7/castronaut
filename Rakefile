@@ -33,6 +33,7 @@ begin
 
     s.add_dependency 'sinatra'
     s.add_dependency 'json'
+    s.add_dependency 'builder', '>= 2.0.0'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

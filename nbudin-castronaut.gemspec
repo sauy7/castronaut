@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{nbudin-castronaut}
-  s.version = "0.7.5"
+  s.version = "0.8.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Relevance, Inc.", "Nat Budin"]
-  s.date = %q{2011-02-16}
+  s.date = %q{2011-03-28}
   s.default_executable = %q{castronaut}
   s.description = %q{Nat Budin's experimental fork of Castronaut}
   s.email = %q{natbudin@gmail.com}
@@ -27,8 +27,8 @@ Gem::Specification.new do |s|
     "app/views/layout.erb",
     "app/views/login.erb",
     "app/views/logout.erb",
-    "app/views/proxy_validate.erb",
-    "app/views/service_validate.erb",
+    "app/views/proxy_validate.builder",
+    "app/views/service_validate.builder",
     "bin/castronaut",
     "castronaut.rb",
     "config/castronaut.example.yml",
@@ -996,13 +996,16 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sinatra>, [">= 0"])
       s.add_runtime_dependency(%q<json>, [">= 0"])
+      s.add_runtime_dependency(%q<builder>, [">= 2.0.0"])
     else
       s.add_dependency(%q<sinatra>, [">= 0"])
       s.add_dependency(%q<json>, [">= 0"])
+      s.add_dependency(%q<builder>, [">= 2.0.0"])
     end
   else
     s.add_dependency(%q<sinatra>, [">= 0"])
     s.add_dependency(%q<json>, [">= 0"])
+    s.add_dependency(%q<builder>, [">= 2.0.0"])
   end
 end
 

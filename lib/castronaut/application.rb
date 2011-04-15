@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'castronaut'
 
 module Castronaut
 
@@ -8,7 +9,7 @@ module Castronaut
 
     configure do
 
-      root     = File.expand_path File.dirname(__FILE__)
+      root     = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "app"))
       app_file = "#{root}/controllers/application.rb"
       views    = "#{root}/views"
       pub_dir  = "#{root}/public"

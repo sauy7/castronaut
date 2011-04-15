@@ -10,6 +10,12 @@ class Hodel3000CompliantLogger < Logger
 
 end
 
+class CastronautMigrator < ActiveRecord::Migrator
+  def connection
+    Castronaut::LoginTicket.connection
+  end
+end
+
 module Castronaut
 
   class Configuration
@@ -88,12 +94,17 @@ module Castronaut
 
     def connect_cas_to_activerecord
       logger.info "#{self.class} - Connecting to cas database using #{cas_database.inspect}"
-      ActiveRecord::Base.establish_connection(cas_database)
+      ActiveRecord::Base.configurations["castronaut"] = cas_database
+      
+      [Castronaut::Models::LoginTicket, Castronaut::Models::ProxyGrantingTicket, Castronaut::Models::ProxyTicket,
+        Castronaut::Models::ServiceTicket, Castronaut::Models::TicketGrantingTicket].each do |model|
+          model.establish_connection("castronaut")
+      end
 
       migration_path = File.expand_path(File.join(File.dirname(__FILE__), 'db'))
 
       logger.debug "#{self.class} - Migrating to the latest version using migrations in #{migration_path}"
-      ActiveRecord::Migrator.migrate(migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+      CastronautMigrator.migrate(migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
     end
 
     def connect_adapter_to_activerecord

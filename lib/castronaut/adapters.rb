@@ -2,19 +2,25 @@ module Castronaut
 
   module Adapters
 
-    Dir[ File.expand_path(File.join File.dirname(__FILE__), 'adapters/**/*.rb') ].each{|f| require f}
-
-    def self.selected_adapter
-      case Castronaut.config.cas_adapter['adapter']
-        when "development"
-          Castronaut::Adapters::Development::Adapter
-        when "ldap"
-          Castronaut::Adapters::Ldap::Adapter
-        when "database"
-          Castronaut::Adapters::RestfulAuthentication::Adapter
-      end
+    @@registered_adapters = {}
+    
+    def self.register(name, klass)
+      @@registered_adapters[name.to_s] = klass
     end
     
+    def self.[](name)
+      @@registered_adapters[name.to_s]
+    end
+
+    def self.selected_adapter
+      self[Castronaut.config.cas_adapter['adapter']]
+    end
   end
 
 end
+
+Dir[ File.expand_path(File.join File.dirname(__FILE__), 'adapters/**/*.rb') ].each{|f| require f}
+
+Castronaut::Adapters.register("development", Castronaut::Adapters::Development::Adapter)
+Castronaut::Adapters.register("ldap", Castronaut::Adapters::Ldap::Adapter)
+Castronaut::Adapters.register("database", Castronaut::Adapters::RestfulAuthentication::Adapter)

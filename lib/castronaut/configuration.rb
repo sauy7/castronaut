@@ -10,12 +10,6 @@ class Hodel3000CompliantLogger < Logger
 
 end
 
-class CastronautMigrator < ActiveRecord::Migrator
-  def connection
-    Castronaut::LoginTicket.connection
-  end
-end
-
 module Castronaut
 
   class Configuration
@@ -86,25 +80,31 @@ module Castronaut
       create_directory('db')
 
       ActiveRecord::Base.logger = logger
-      #ActiveRecord::Base.colorize_logging = false
 
       connect_cas_to_activerecord
       connect_adapter_to_activerecord if cas_adapter.has_key?('database')
     end
 
     def connect_cas_to_activerecord
-      logger.info "#{self.class} - Connecting to cas database using #{cas_database.inspect}"
-      ActiveRecord::Base.configurations["castronaut"] = cas_database
-      
-      [Castronaut::Models::LoginTicket, Castronaut::Models::ProxyGrantingTicket, Castronaut::Models::ProxyTicket,
-        Castronaut::Models::ServiceTicket, Castronaut::Models::TicketGrantingTicket].each do |model|
-          model.establish_connection("castronaut")
-      end
+      migration_path = File.expand_path( '../db', __FILE__ )
 
-      migration_path = File.expand_path(File.join(File.dirname(__FILE__), 'db'))
+      logger.info "#{self.class} - Connecting to cas database using #{cas_database.inspect}"
+
+      ActiveRecord::Base.configurations['castronaut'] = cas_database
+      Castronaut::Models.each { |m| m.establish_connection('castronaut') }
 
       logger.debug "#{self.class} - Migrating to the latest version using migrations in #{migration_path}"
-      CastronautMigrator.migrate(migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+
+      begin
+        previous_config = ActiveRecord::Base.connection.instance_variable_get(:@config)
+      rescue
+        # do nothing...
+      ensure
+        ActiveRecord::Base.establish_connection('castronaut')
+        ActiveRecord::Migration.verbose = true
+        ActiveRecord::Migrator.migrate migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil
+        ActiveRecord::Base.establish_connection(previous_config) if previous_config
+      end
     end
 
     def connect_adapter_to_activerecord

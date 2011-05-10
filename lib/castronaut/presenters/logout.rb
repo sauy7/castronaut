@@ -15,10 +15,13 @@ module Castronaut
           ticket_granting_ticket.destroy
         end
         
-        messages << "You have successfully logged out."
-        
-        render :logout
-                
+        if params['destination']
+          redirect params['destination']
+        else
+          messages << "You have successfully logged out."        
+          render :logout
+        end
+              
         self
       end
     

@@ -105,6 +105,19 @@ describe 'Castronaut Application Controller' do
     end
 
   end
+  
+  describe "GET /logout with destination" do
+
+    before do
+      get '/logout', params.update(:destination => "http://www.google.com")
+    end
+
+    it {
+      should be_redirect
+      last_response.headers['Location'].should == "http://www.google.com"
+    }
+
+  end
 
   describe "GET /logout.json" do
 

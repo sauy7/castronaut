@@ -17,6 +17,7 @@ describe Castronaut::Configuration do
       config.stub!(:connect_activerecord)
       config.stub!(:setup_logger).and_return(stub({}).as_null_object)
       Castronaut::Configuration.stub!(:new).and_return(config)
+      File.stub!(:exist?).and_return(true)
 
       Castronaut::Configuration.load.config_file_path.should == File.expand_path('../../../config/castronaut.yml', __FILE__)
     end

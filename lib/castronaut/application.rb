@@ -9,7 +9,7 @@ module Castronaut
 
     configure do
 
-      root     = File.expand_path( '../../app', __FILE__ )
+      root     = File.expand_path( '../../../app', __FILE__ )
       app_file = "#{root}/controllers/application.rb"
       views    = "#{root}/views"
       pub_dir  = "#{root}/public"

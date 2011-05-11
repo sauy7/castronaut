@@ -29,7 +29,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets html content-type" do
-      last_response.headers['Content-Type'] == 'text/html'
+      last_response.headers['Content-Type'].should =~ /^text\/html/
     end
 
     it "sets the Pragma header to 'no-cache'" do
@@ -73,7 +73,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets html content-type" do
-      last_response.headers['Content-Type'] == 'text/html'
+      last_response.headers['Content-Type'].should =~ /^text\/html/
     end
 
   end
@@ -101,7 +101,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets html content-type" do
-      last_response.headers['Content-Type'] == 'text/html'
+      last_response.headers['Content-Type'].should =~ /^text\/html/
     end
 
   end
@@ -128,7 +128,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets json content-type" do
-      last_response.headers['Content-Type'] == 'application/json'
+      last_response.headers['Content-Type'].should == 'application/json'
     end
 
     it "should have messages as an array" do
@@ -146,7 +146,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets xml content-type" do
-      last_response.headers['Content-Type'] == 'application/xml'
+      last_response.headers['Content-Type'].should =~ /^application\/xml/
     end
 
   end
@@ -160,7 +160,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets json content-type" do
-      last_response.headers['Content-Type'] == 'application/json'
+      last_response.headers['Content-Type'].should == 'application/json'
     end
 
   end
@@ -174,7 +174,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets xml content-type" do
-      last_response.headers['Content-Type'] == 'application/xml'
+      last_response.headers['Content-Type'].should =~ /^application\/xml/
     end
 
   end
@@ -188,7 +188,7 @@ describe 'Castronaut Application Controller' do
     it { should be_ok }
 
     it "sets json content-type" do
-      last_response.headers['Content-Type'] == 'application/json'
+      last_response.headers['Content-Type'].should == 'application/json'
     end
 
   end

@@ -1,6 +1,34 @@
 require 'sinatra'
 require 'castronaut'
 
+# support the Sinatra 1.2 "url" helper for Sinatra 1.0
+module Sinatra
+  module Helpers
+    unless respond_to? :uri
+      # Generates the absolute URI for a given path in the app.
+      # Takes Rack routers and reverse proxies into account.
+      def uri(addr = nil, absolute = true, add_script_name = true)
+        return addr if addr =~ /\A[A-z][A-z0-9\+\.\-]*:/
+        uri = [host = ""]
+        if absolute
+          host << "http#{'s' if request.secure?}://"
+          if request.env.include? "HTTP_X_FORWARDED_HOST" or request.port != (request.secure? ? 443 : 80)
+            host << request.host_with_port
+          else
+            host << request.host
+          end
+        end
+        uri << request.script_name.to_s if add_script_name
+        uri << (addr ? addr : request.path_info).to_s
+        File.join uri
+      end
+
+      alias url uri
+      alias to uri
+    end
+  end
+end
+
 module Castronaut
 
   Castronaut.config ||= Castronaut::Configuration.load

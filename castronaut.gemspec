@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new('>= 1.4') if s.respond_to? :required_rubygems_version=
   s.authors = ['Relevance, Inc.', 'Nat Budin', 'Damien Le Berrigaud']
   s.date = '2011-02-16'
-  s.default_executable = 'castronaut'
   s.description = 'Castronaut CAS server'
   s.executables = ['castronaut']
 

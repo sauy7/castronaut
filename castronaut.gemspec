@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = 'Castronaut CAS server'
   s.executables = ['castronaut']
 
-  s.files = %w(MIT-LICENSE Rakefile README.textile castronaut.rb bin/castronaut)
+  s.files = %w(MIT-LICENSE Rakefile README.textile bin/castronaut)
   s.files << Dir['lib/**/*', 'app/**/*', 'config/**/*']
 
   s.homepage = 'http://github.com/nbudin/castronaut'

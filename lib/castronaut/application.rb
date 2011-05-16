@@ -13,7 +13,7 @@ module Sinatra
         if absolute
           host << "http#{'s' if request.secure?}://"
           if request.env.include? "HTTP_X_FORWARDED_HOST" or request.port != (request.secure? ? 443 : 80)
-            host << request.host_with_port
+            host << "#{request.host}:#{request.port}"
           else
             host << request.host
           end

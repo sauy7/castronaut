@@ -11,6 +11,9 @@ class Hodel3000CompliantLogger < Logger
 end
 
 module Castronaut
+  
+  class ConfigurationNotFound < Exception
+  end
 
   class Configuration
     DefaultConfigFilePath = Castronaut.file_path( 'config', 'castronaut.yml' )
@@ -21,8 +24,7 @@ module Castronaut
       if File.exist?(path)
         STDOUT.puts "Loading configuration at #{path}..."
       else
-        STDERR.puts "Unable to locate configuration at #{path}"
-        exit 0
+        raise ConfigurationNotFound.new("Unable to locate configuration at #{path}")
       end
 
       config = Castronaut::Configuration.new

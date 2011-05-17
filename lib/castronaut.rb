@@ -16,7 +16,7 @@ module Castronaut
   end
 
   def self.config
-    @cas_config
+    @cas_config ||= Castronaut::Configuration.load
   end
 
   def self.config=(config)
@@ -24,7 +24,7 @@ module Castronaut
   end
 
   def self.logger
-    @cas_config.logger
+    config.logger
   end
 
   %w(

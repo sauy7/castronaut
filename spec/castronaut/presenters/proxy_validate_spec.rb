@@ -71,6 +71,16 @@ describe Castronaut::Presenters::ProxyValidate do
           end
 
         end
+        
+        it "should get extra attributes from the env" do
+          extra_attributes = { :realname => "Matz" }
+          @controller.request.env['castronaut.extra_attributes'] = extra_attributes
+          Castronaut::Presenters::ProxyValidate.new(@controller).represent!.extra_attributes.should == extra_attributes
+        end
+        
+        it "should default to no extra attributes" do
+          Castronaut::Presenters::ProxyValidate.new(@controller).represent!.extra_attributes.should == {}
+        end
 
         describe "when a proxy granting ticket url is present" do
 

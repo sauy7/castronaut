@@ -12,7 +12,7 @@ module Castronaut
 
           def initialize(controller, format = :xml)
             super controller, format
-            @extra_attributes = {}
+            @extra_attributes = env["castronaut.extra_attributes"] || {}
           end
 
           def proxy_granting_ticket_iou

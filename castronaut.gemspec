@@ -27,9 +27,9 @@ Gem::Specification.new do |s|
 
   # TODO these should be optional
   # according to the chosen adapter
-  s.add_dependency 'sqlite3', '~> 1.3.1'
-  s.add_dependency 'ruby-net-ldap'
-  s.add_dependency 'mysql2'
+  #s.add_dependency 'sqlite3', '~> 1.3.1'
+  #s.add_dependency 'ruby-net-ldap'
+  #s.add_dependency 'mysql2'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '>= 2.2.1'

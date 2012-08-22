@@ -7,3 +7,4 @@ db
 ssl
 config/castronaut.yml
 tmtags
+Gemfile.lock

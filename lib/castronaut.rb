@@ -1,3 +1,4 @@
+require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'version'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'configuration'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'support', 'sample'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'castronaut', 'utilities', 'random_string'))

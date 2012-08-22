@@ -1,6 +1,8 @@
 # Copyright 2008-2009 Relevance Inc.
 # All rights reserved
 
+require "bundler/gem_tasks"
+
 # This file may be distributed under an MIT style license.
 # See MIT-LICENSE for details.
 

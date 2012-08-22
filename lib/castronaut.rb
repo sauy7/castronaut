@@ -1,3 +1,4 @@
+require 'castronaut/version'
 require 'active_support'
 require 'active_record'
 

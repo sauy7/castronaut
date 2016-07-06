@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.executables = ['castronaut']
 
   s.files = %w(MIT-LICENSE Rakefile README.textile bin/castronaut)
-  s.files << Dir['lib/**/*', 'app/**/*', 'config/**/*']
+  s.files += Dir['lib/**/*', 'app/**/*', 'config/**/*']
 
   s.homepage = 'http://github.com/nbudin/castronaut'
   s.require_paths = ["lib"]

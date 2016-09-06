@@ -93,7 +93,7 @@ module Castronaut
       logger.info "#{self.class} - Connecting to cas database using #{cas_database.inspect}"
 
       ActiveRecord::Base.configurations['castronaut'] = cas_database
-      Castronaut::Models.each { |m| m.establish_connection('castronaut') }
+      Castronaut::Models.each { |m| m.establish_connection(:castronaut) }
 
       logger.debug "#{self.class} - Migrating to the latest version using migrations in #{migration_path}"
 
@@ -102,7 +102,7 @@ module Castronaut
       rescue
         # do nothing...
       ensure
-        ActiveRecord::Base.establish_connection('castronaut')
+        ActiveRecord::Base.establish_connection(:castronaut)
         ActiveRecord::Migration.verbose = true
         ActiveRecord::Migrator.migrate migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil
         ActiveRecord::Base.establish_connection(previous_config) if previous_config

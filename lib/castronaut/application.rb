@@ -64,7 +64,7 @@ module Castronaut
   private
 
     def self.path_regex path
-      /\A\/#{path}(\.json)?\z/
+      /\/#{path}(\.json)?/
     end
 
   public

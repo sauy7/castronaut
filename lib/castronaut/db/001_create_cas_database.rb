@@ -1,4 +1,4 @@
-class CreateCasDatabase < ActiveRecord::Migration
+class CreateCasDatabase < ActiveRecord::Migration[4.2]
   def self.up
     create_table :login_tickets,   :force => true do |t|
       t.column :ticket,           :string,    :null => false

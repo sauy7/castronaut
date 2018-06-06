@@ -104,8 +104,6 @@ module Castronaut
       ensure
         ActiveRecord::Base.establish_connection(:castronaut)
         ActiveRecord::Migration.verbose = true
-        # Change to support ActiveRecord 5.2
-        # ActiveRecord::Migrator.migrate migration_path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil
         ActiveRecord::MigrationContext.new(migration_path).migrate(ENV["VERSION"]) ? ENV["VERSION"].to_i : nil
         ActiveRecord::Base.establish_connection(previous_config) if previous_config
       end

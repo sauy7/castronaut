@@ -45,7 +45,7 @@ module Castronaut
       end
       
       def self.clean_up_proxy_granting_tickets_for(username)
-        proxy_granting_tickets = all(:include => :service_ticket, :conditions => ["service_tickets.username = ?", username])
+        proxy_granting_tickets = joins(:service_ticket).merge(ServiceTicket.where(username: username))
         proxy_granting_tickets.each { |pgt| pgt.destroy }
         nil
       end
